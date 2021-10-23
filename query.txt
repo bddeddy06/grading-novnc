@@ -1,0 +1,22 @@
+CREATE TABLE `db_grading`.`admin` ( `id` INT(11) NOT NULL AUTO_INCREMENT , `username` VARCHAR(255) NOT NULL , `password` VARCHAR(255) NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+
+INSERT INTO `admin` (`id`, `username`, `password`) VALUES (NULL, 'admin', 'admin123');
+
+CREATE TABLE `db_grading`.`mahasiswa` ( `nim` INT(10) NOT NULL , `nama_mahasiswa` VARCHAR(255) NOT NULL , `password` INT(10) NOT NULL DEFAULT '8899' , PRIMARY KEY (`nim`)) ENGINE = InnoDB;
+
+INSERT INTO `mahasiswa` (`nim`, `nama_mahasiswa`, `password`) VALUES ('1610530133', 'Bhintang Dirgantara', '8899'), ('1410530129', 'Naufal Hanif', '8899')
+
+CREATE TABLE `db_grading`.`nilai` ( `id_nilai` INT(10) NOT NULL AUTO_INCREMENT , `nim` INT(10) NOT NULL , `nilai` INT(10) NOT NULL DEFAULT '0' , PRIMARY KEY (`id_nilai`), INDEX (`nim`)) ENGINE = InnoDB;
+
+CREATE VIEW belum_ujian AS
+SELECT mahasiswa.nim, mahasiswa.nama_mahasiswa, nilai.nilai
+FROM nilai JOIN mahasiswa
+ON mahasiswa.nim = nilai.nim
+WHERE nilai=0
+
+CREATE VIEW sudah_ujian AS
+SELECT mahasiswa.nim, mahasiswa.nama_mahasiswa, nilai.nilai
+FROM nilai JOIN mahasiswa
+ON mahasiswa.nim = nilai.nim
+WHERE nilai!=0
+
